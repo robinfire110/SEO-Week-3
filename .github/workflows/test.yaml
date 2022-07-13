@@ -17,6 +17,7 @@ jobs:
           python -m pip install --upgrade pip pytest
           pip3 install flask
           pip3 install flask-wtf
+          pip3 install flask-behind-proxy
           pip3 install flask-sqlalchemy
           pip3 install email-validator
 
