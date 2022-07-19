@@ -1,5 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>{{ subtitle }}</h2>
-    <p>{{ text }}</p>
+    <h2>{{ question }} </h2>
+    <ul>
+        <li><button onclick="checkAnswer('{{ a1 }}', '{{ correct_answer }}')">{{ a1 }}</button></li> 
+        <li><button onclick="checkAnswer('{{ a2 }}', '{{ correct_answer }}')">{{ a2 }}</button></li> 
+        <li><button onclick="checkAnswer('{{ a3 }}', '{{ correct_answer }}')">{{ a3 }}</button></li> 
+        <li><button onclick="checkAnswer('{{ a4 }}', '{{ correct_answer }}')">{{ a4 }}</button></li> 
+    <ul>
+
+    <script>
+        function checkAnswer(answer, correct_answer) {
+            if (answer == correct_answer) {
+                location.href = '/correct'
+            }
+            else location.href = '/incorrect'
+        }
+    </script>
 {% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Your Answer Was...</h2>
+    <br>
+    <h1 style="color: {{ color }}">{{ result }}</h1>
+    <br>
+    <div class="button"><button onclick="sendHome()">New Question</button></div>
+
+    <script>
+        function sendHome(){
+            location.href = "/home";
+        }
+    </script>
+{% endblock content %}

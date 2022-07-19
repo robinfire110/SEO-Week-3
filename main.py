@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegistrationForm
+from flask import Flask, render_template, url_for, flash, redirect, request
+from forms import RegistrationForm, AnswerForm
 from flask_behind_proxy import FlaskBehindProxy
 from flask_sqlalchemy import SQLAlchemy
+from trivia import TriviaQuestion
 
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)  ## add this line
@@ -19,15 +20,29 @@ class User(db.Model):
   def __repr__(self):
     return f"User('{self.username}', '{self.email}')"
 
-@app.route("/")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def home():
-    return render_template('home.html', subtitle='Home Page', text='This is the home page')
+    #Trivia
+    t = TriviaQuestion()
+    t.get_data()
+    string = t.list_of_answers
+
+    #Set Question
+    return render_template('home.html', question=t.question, a1=t.list_of_answers[0], a2=t.list_of_answers[1], a3=t.list_of_answers[2], a4=t.list_of_answers[3], correct_answer=t.correct_answer)
+
+@app.route("/correct")
+def correct():
+    return render_template('result.html', result="CORRECT", color="green")
+
+@app.route("/incorrect")
+def incorrect():
+    return render_template('result.html', result="INCORRECT", color="red")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if form.validate_on_submit(): # checks if entries are valid
+    if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-    <h1>This shows up on every page TEST</h1>
+    <h1>Random Trivia Question</h1>
 
     {% block content %}{% endblock %}
 </body>
